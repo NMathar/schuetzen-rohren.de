@@ -1,0 +1,375 @@
+// Variables
+$spacing-unit: 8px;
+$forest-texture: url('https://images.pexels.com/photos/167698/pexels-photo-167698.jpeg');
+$leaf-pattern: url('https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg');
+$oak-leaf: url('~/assets/images/749b86bcd8968348318588b10a38fb77.png');
+
+// Global styles
+html, body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #F8F8F0;
+  color: #2F4F4F;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  line-height: 1.3;
+  color: #4A6741;
+}
+
+p, li {
+  line-height: 1.6;
+}
+
+// Custom spacing classes based on 8px system
+@for $i from 1 through 12 {
+  .ma-#{$i} { margin: $spacing-unit * $i !important; }
+  .mt-#{$i} { margin-top: $spacing-unit * $i !important; }
+  .mr-#{$i} { margin-right: $spacing-unit * $i !important; }
+  .mb-#{$i} { margin-bottom: $spacing-unit * $i !important; }
+  .ml-#{$i} { margin-left: $spacing-unit * $i !important; }
+  .mx-#{$i} { margin-left: $spacing-unit * $i !important; margin-right: $spacing-unit * $i !important; }
+  .my-#{$i} { margin-top: $spacing-unit * $i !important; margin-bottom: $spacing-unit * $i !important; }
+  
+  .pa-#{$i} { padding: $spacing-unit * $i !important; }
+  .pt-#{$i} { padding-top: $spacing-unit * $i !important; }
+  .pr-#{$i} { padding-right: $spacing-unit * $i !important; }
+  .pb-#{$i} { padding-bottom: $spacing-unit * $i !important; }
+  .pl-#{$i} { padding-left: $spacing-unit * $i !important; }
+  .px-#{$i} { padding-left: $spacing-unit * $i !important; padding-right: $spacing-unit * $i !important; }
+  .py-#{$i} { padding-top: $spacing-unit * $i !important; padding-bottom: $spacing-unit * $i !important; }
+}
+
+// Scroll reveal animations
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Nature elements
+.leaf-decoration {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background-image: $oak-leaf;
+  background-size: cover;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: -1;
+  
+  &.top-right {
+    top: -150px;
+    right: -150px;
+    transform: rotate(45deg);
+  }
+  
+  &.bottom-left {
+    bottom: -150px;
+    left: -150px;
+    transform: rotate(45deg) scaleX(-1);
+  }
+}
+
+.oak-leaf-corner {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background-image: $oak-leaf;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.12;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 1;
+  
+  &.top-left,
+  &.top-right {
+    transform-origin: bottom;
+  }
+  
+  &.bottom-left,
+  &.bottom-right {
+    transform-origin: top;
+  }
+  
+  &.top-left,
+  &.bottom-left {
+    left: 20px;
+  }
+  
+  &.top-right,
+  &.bottom-right {
+    right: 20px;
+  }
+  
+  &.top-left,
+  &.top-right {
+    top: 20px;
+  }
+  
+  &.bottom-left,
+  &.bottom-right {
+    bottom: 20px;
+  }
+  
+  &.top-left,
+  &.bottom-right {
+    transform: rotate(45deg) scaleX(-1);
+  }
+  
+  &.top-right,
+  &.bottom-left {
+    transform: rotate(45deg);
+  }
+  
+  &.top-left,
+  &.bottom-right,
+  &.top-right,
+  &.bottom-left {
+    animation-name: leafFloatMirrored;
+  }
+}
+
+@keyframes leafFloat {
+  0%, 100% {
+    transform: rotate(45deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(45deg) translateY(-10px);
+  }
+}
+
+@keyframes leafFloatMirrored {
+  0%, 100% {
+    transform: rotate(45deg) scaleX(-1) translateY(0px);
+  }
+  50% {
+    transform: rotate(45deg) scaleX(-1) translateY(-10px);
+  }
+}
+
+// Mirrored leaves for left side
+// .oak-leaf-corner.bottom-left {
+//   @keyframes leafFloatMirrored {
+//     0%, 100% {
+//       transform: rotate(45deg) scaleX(-1) translateY(0px);
+//     }
+//     50% {
+//       transform: rotate(45deg) scaleX(-1) translateY(-10px);
+//     }
+//   }
+//   animation-name: leafFloatMirrored;
+// }
+
+.section-divider {
+  position: relative;
+  height: 40px;
+  margin: 40px 0;
+  opacity: 0.15;
+  background-image: $oak-leaf;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: rotate(45deg);
+}
+
+// Scattered leaves for sections
+.section-leaves {
+  position: relative;
+  
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: $oak-leaf;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  &::before {
+    top: 10%;
+    left: 5%;
+    transform: rotate(45deg);
+    animation: leafFloat 8s ease-in-out infinite;
+  }
+  
+  &::after {
+    bottom: 15%;
+    right: 8%;
+    transform: rotate(45deg) scaleX(-1);
+    animation: leafFloat 8s ease-in-out infinite 2s;
+  }
+}
+
+// Custom styling for accent elements
+.section-title {
+  position: relative;
+  display: inline-block;
+  margin-bottom: $spacing-unit * 4;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(to right, #4A6741, #D4AF37);
+    border-radius: 2px;
+  }
+}
+
+.pattern-bg {
+  background-image: $leaf-pattern;
+  background-repeat: repeat;
+  background-size: 300px;
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+}
+
+.hero-overlay {
+  background: linear-gradient(to bottom, rgba(74, 103, 65, 0.7), rgba(47, 79, 79, 0.85));
+}
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2rem !important;
+  background: linear-gradient(135deg, #fff 0%, #F8F8F0 100%) !important;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: $forest-texture;
+    opacity: 0.04;
+    mix-blend-mode: multiply;
+    border-radius: 2rem;
+    pointer-events: none;
+  }
+  
+  &:hover {
+    box-shadow: 0 8px 20px rgba(74, 103, 65, 0.12) !important;
+    background: linear-gradient(135deg, #fff 0%, #F5F5F0 100%) !important;
+  }
+}
+
+// Gallery styles
+.gallery-image {
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  transition: all 0.4s ease;
+  
+  &:hover {
+    filter: brightness(1.05);
+    transform: scale(1.02);
+  }
+}
+
+// Form styling
+.form-container {
+  background: linear-gradient(135deg, #fff 0%, #F8F8F0 100%);
+  border-radius: 2rem;
+  box-shadow: 0 8px 30px rgba(74, 103, 65, 0.1);
+  padding: $spacing-unit * 4;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: $forest-texture;
+    opacity: 0.03;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+}
+
+// Custom component styling
+.v-card {
+  border-radius: 2rem !important;
+  overflow: hidden;
+}
+
+// Timeline customization
+.v-timeline-item__dot {
+  background: linear-gradient(135deg, #4A6741 0%, #D4AF37 100%) !important;
+  border-radius: 50% !important;
+}
+
+// Table customization
+.v-table {
+  border-radius: 1.5rem !important;
+  overflow: hidden;
+  
+  th {
+    background-color: rgba(74, 103, 65, 0.08) !important;
+    color: #4A6741 !important;
+  }
+  
+  tr:hover {
+    background-color: rgba(74, 103, 65, 0.03) !important;
+  }
+}
+
+// Footer customization
+.v-footer {
+  background: linear-gradient(135deg, #4A6741 0%, #2F4F4F 100%) !important;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 !important;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: $forest-texture;
+    opacity: 0.08;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F8F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #4A6741, #8B7355);
+  border-radius: 6px;
+  border: 3px solid #F8F8F0;
+}
+
+// Override Vuetify's layout top spacing
+main {
+  --v-layout-top: 0px !important;
+}

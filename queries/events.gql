@@ -1,0 +1,23 @@
+query Events{
+  entries(section: "veranstaltungen"){
+    id
+    uid
+    title
+    slug
+    ... on veranstaltung_Entry{
+      title
+      datum
+      kurzbeschreibung
+      beschreibung
+      bild{
+        id
+        kind
+        title
+        folderId
+        volumeId
+        mimeType
+        path
+      }
+    }
+  }
+}

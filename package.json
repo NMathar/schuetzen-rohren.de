@@ -1,0 +1,25 @@
+{
+  "name": "shooting-club",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "nuxt": "^4.2.2",
+    "nuxt-graphql-client": "^0.2.46",
+    "nuxt-swiper": "^2.0.1",
+    "sass": "^1.97.0",
+    "vuetify": "^3.11.3",
+    "vuetify-nuxt-module": "^0.19.0",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/google-fonts": "^3.1.3"
+  }
+}
