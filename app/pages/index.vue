@@ -18,7 +18,7 @@
         <VContainer>
           <h2 class="text-h3 text-center font-weight-light mb-16">Unsere Veranstaltungen</h2>
           <VRow>
-            <VCol v-for="(event, index) in upcomingEvents" :key="index" cols="12" md="4">
+            <VCol v-for="(event, index) in events.entries" :key="index" cols="12" md="4">
               <VCard class="card-hover h-100" elevation="0">
                 <VImg
                   :src="event.image || 'https://images.pexels.com/photos/1125268/pexels-photo-1125268.jpeg'"
@@ -27,8 +27,8 @@
                 />
                 <VCardTitle class="pt-6">{{ event.title }}</VCardTitle>
                 <VCardText>
-                  <p class="mb-2">{{ event.date }}</p>
-                  <p class="mb-6">{{ event.description }}</p>
+                  <p class="mb-2">{{ event.datum }}</p>
+                  <div class="mb-6" v-html="event.kurzbeschreibung"></div>
                   <VBtn
                     color="accent"
                     variant="outlined"
@@ -47,14 +47,21 @@
 </template>
 
 <script setup>
-const upcomingEvents = ref([]);
+const { data: events, error, pending, refresh } = await useAsyncGql({
+  operation: 'GetEvents',
+  variables: { limit: 15 }
+})
 
-onMounted(async () => {
-  const eventsData = await queryCollection('events').all();
-  console.log(eventsData);
-  
-  upcomingEvents.value = eventsData
-});
+if (error.value) {
+  // eslint-disable-next-line no-console
+  console.error(error.value)
+}
+
+// const events = ref([])
+
+// onMounted(async () => {
+//   console.log(await GqlGetEvents())
+// })
 </script>
 
 <style scoped>

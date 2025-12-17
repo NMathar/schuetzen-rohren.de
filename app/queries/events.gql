@@ -1,12 +1,12 @@
-query Events{
-  entries(section: "veranstaltungen"){
+query GetEvents($limit: Int = 5){
+  entries(section: "veranstaltungen", limit: $limit){
     id
     uid
     title
     slug
     ... on veranstaltung_Entry{
       title
-      datum
+      datum @formatDateTime (format: "d.m.Y")
       kurzbeschreibung
       beschreibung
       bild{
