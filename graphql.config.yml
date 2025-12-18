@@ -1,0 +1,2 @@
+schema: 'https://backend.schuetzen-rohren.de/actions/graphql/api'
+documents: 'app/queries/**/*.{graphql,gql}'
