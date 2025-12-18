@@ -56,8 +56,8 @@ jobs:
           lftp -u "$USER","$PASS" sftp://$HOST << EOF
           set sftp:auto-confirm yes
           rm -rf $BASE/old
-          rename $BASE/current $BASE/old
-          rename $BASE/next $BASE/current
+          mv $BASE/current $BASE/old
+          mv $BASE/next $BASE/current
           rm -rf $BASE/old
           bye
           EOF
