@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   ssr: false,
+  nitro: {
+    preset: 'static'
+  },
   
   modules: ['vuetify-nuxt-module', '@nuxtjs/google-fonts', 'nuxt-swiper', 'nuxt-graphql-client'],
   

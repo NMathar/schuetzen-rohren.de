@@ -1,0 +1,63 @@
+name: Build & Deploy Nuxt Static (SFTP only)
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npx nuxi generate
+
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Upload to NEXT directory
+        env:
+          HOST: ${{ secrets.SFTP_HOST }}
+          USER: ${{ secrets.SFTP_USER }}
+          PASS: ${{ secrets.SFTP_PASSWORD }}
+          BASE: ${{ secrets.SFTP_BASE_PATH }}
+        run: |
+          lftp -u "$USER","$PASS" sftp://$HOST << EOF
+          set sftp:auto-confirm yes
+          rm -rf $BASE/next
+          mkdir -p $BASE/next
+          mirror -R --delete .output/public $BASE/next
+          bye
+          EOF
+
+      - name: Atomic switch (rename)
+        env:
+          HOST: ${{ secrets.SFTP_HOST }}
+          USER: ${{ secrets.SFTP_USER }}
+          PASS: ${{ secrets.SFTP_PASSWORD }}
+          BASE: ${{ secrets.SFTP_BASE_PATH }}
+        run: |
+          lftp -u "$USER","$PASS" sftp://$HOST << EOF
+          set sftp:auto-confirm yes
+          rm -rf $BASE/old
+          rename $BASE/current $BASE/old
+          rename $BASE/next $BASE/current
+          rm -rf $BASE/old
+          bye
+          EOF
