@@ -12,17 +12,17 @@
           <NuxtLink to="/" class="text-decoration-none">
             <div class="d-flex align-center">
               <img
-                src="~/assets/images/logo.jpeg"
-                alt="Schützenverein Logo"
+                src="~/assets/images/logo.png"
+                alt="St. Cornelius Rohren e.V. Logo"
                 height="50"
-                class="mr-3"
+                class="mr-3 ml-2"
               />
               <div>
                 <h1 class="text-h5 font-weight-bold mb-0" :class="scrolled ? 'text-primary' : 'text-white'">
-                  Schützenverein
+                  St. Cornelius Rohren e.V.
                 </h1>
-                <div class="text-caption text-uppercase" :class="scrolled ? 'text-accent' : 'text-white'">
-                  Tradition seit 1832
+                <div class="text-caption" :class="scrolled ? 'text-accent' : 'text-white'">
+                  Glaube Sitte Heimat seit 1958
                 </div>
               </div>
             </div>

@@ -5,7 +5,7 @@
         <VCol cols="12" md="4">
           <div class="d-flex align-center mb-4">
             <img
-              src="~assets//images/logo.jpeg"
+              src="~assets//images/logo.png"
               alt="Schützenverein Logo"
               height="60"
               class="mr-3"

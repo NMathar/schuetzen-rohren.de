@@ -4,8 +4,9 @@
       <HeroSection
         title="Kontakt"
         subtitle="Sprechen Sie uns an - wir freuen uns auf Ihre Nachricht"
-        background-image="https://images.pexels.com/photos/1550337/pexels-photo-1550337.jpeg"
+        background-image="https://images.pexels.com/photos/5605061/pexels-photo-5605061.jpeg"
         height="400"
+        button-text="Mehr über uns"
       />
       
       <VContainer class="py-12">
@@ -16,7 +17,7 @@
                 <VCol cols="12" md="6" class="pa-0">
                   <div class="h-100" style="min-height: 400px">
                     <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.654294921315!2d13.372469776441515!3d52.50788253981268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c655f20989%3A0x26bbfb4e84674c63!2sBrandenburger%20Tor!5e0!3m2!1sde!2sde!4v1682159548918!5m2!1sde!2sde" 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1191.944675246076!2d6.284606031104233!3d50.54385573957385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bf7927956feae7%3A0xcf04e9b223ebbe24!2sSt.%20Cornelius%20Sch%C3%BCtzenbruderschaft%20Rohren!5e1!3m2!1sde!2sde!4v1766483755058!5m2!1sde!2sde" 
                       width="100%" 
                       height="100%" 
                       style="border:0; display: block;" 
@@ -35,15 +36,7 @@
                       <VIcon color="primary" class="mr-3 mt-1">mdi-map-marker</VIcon>
                       <div>
                         <h4 class="text-subtitle-1 font-weight-bold mb-1">Adresse</h4>
-                        <p class="mb-0">Schützenstraße 123<br>12345 Musterstadt</p>
-                      </div>
-                    </div>
-                    
-                    <div class="d-flex align-start mb-4">
-                      <VIcon color="primary" class="mr-3 mt-1">mdi-phone</VIcon>
-                      <div>
-                        <h4 class="text-subtitle-1 font-weight-bold mb-1">Telefon</h4>
-                        <p class="mb-0">+49 (0) 123 456789</p>
+                        <p class="mb-0">Im Johannesfeld<br>52156 Monschau</p>
                       </div>
                     </div>
                     
@@ -51,19 +44,10 @@
                       <VIcon color="primary" class="mr-3 mt-1">mdi-email</VIcon>
                       <div>
                         <h4 class="text-subtitle-1 font-weight-bold mb-1">E-Mail</h4>
-                        <p class="mb-0">info@schuetzenverein-tradition.de</p>
+                        <p class="mb-0">info@schuetzen-rohren.de</p>
                       </div>
                     </div>
                     
-                    <div class="d-flex align-start">
-                      <VIcon color="primary" class="mr-3 mt-1">mdi-clock</VIcon>
-                      <div>
-                        <h4 class="text-subtitle-1 font-weight-bold mb-1">Öffnungszeiten</h4>
-                        <p class="mb-1">Montag - Freitag: 16:00 - 22:00 Uhr</p>
-                        <p class="mb-1">Samstag: 14:00 - 22:00 Uhr</p>
-                        <p class="mb-0">Sonntag: 10:00 - 18:00 Uhr</p>
-                      </div>
-                    </div>
                   </div>
                 </VCol>
               </VRow>

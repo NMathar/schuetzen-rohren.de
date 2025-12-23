@@ -6,6 +6,7 @@
         subtitle="Tradition seit 1832 - erfahren Sie mehr über unsere Geschichte und Werte"
         background-image="https://images.pexels.com/photos/4456987/pexels-photo-4456987.jpeg"
         height="400"
+        :show-button="false"
       />
       
       <VContainer class="py-12">
