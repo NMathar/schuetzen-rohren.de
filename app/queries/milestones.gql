@@ -1,0 +1,13 @@
+query GetMilestones($limit: Int = 15) {
+	entries(section: "meilensteine", limit: $limit){
+		id
+		uid
+		title
+		slug
+		... on meilenstein_Entry{
+			title
+			jahr
+			beschreibung
+		}
+	}
+}

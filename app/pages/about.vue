@@ -2,9 +2,9 @@
   <NuxtLayout>
     <div>
       <HeroSection
-        title="Über uns"
-        subtitle="Tradition seit 1832 - erfahren Sie mehr über unsere Geschichte und Werte"
-        background-image="https://images.pexels.com/photos/4456987/pexels-photo-4456987.jpeg"
+        :title="aboutPageDate.entry.aboutInhalt[0].title"
+        :subtitle="aboutPageDate.entry.aboutInhalt[0].untertitel ? aboutPageDate.entry.aboutInhalt[0].untertitel : ''"
+        :background-image="aboutPageDate.entry.aboutInhalt[0].bild[0].url"
         height="400"
         :show-button="false"
       />
@@ -12,34 +12,19 @@
       <VContainer class="py-12">
         <div class="content-wrapper">
             <SectionTitle
-              title="Unsere Geschichte"
-              subtitle="Eine Tradition, die bis ins Jahr 1832 zurückreicht"
+              :title="aboutPageDate.entry.aboutInhalt[1].title"
+              :subtitle="aboutPageDate.entry.aboutInhalt[1].untertitel ? aboutPageDate.entry.aboutInhalt[1].untertitel : ''"
             />
             
             <div class="history-section mb-12">
               <div class="history-content">
-                <div class="text-body-1">
-                  <p class="mb-4">
-                    Der Schützenverein wurde im Jahr 1832 von einer Gruppe von Handwerkern und Bürgern gegründet, 
-                    die die Tradition des Schützenwesens bewahren wollten. In einer Zeit politischer Umbrüche 
-                    stand der Verein für bürgerliche Werte und Gemeinschaft.
-                  </p>
-                  <p class="mb-4">
-                    Über die Jahrzehnte entwickelte sich der Verein zu einer festen Institution in der Region. 
-                    Traditionelle Feste wie das Schützenfest im Sommer und das Königsschießen haben sich bis 
-                    heute erhalten und sind wichtige gesellschaftliche Ereignisse in unserem Ort.
-                  </p>
-                  <p>
-                    Heute verbinden wir stolz unsere lange Tradition mit modernen Trainingsmethoden und 
-                    zeitgemäßer Ausstattung, um sowohl erfahrenen Schützen als auch Neueinsteigern 
-                    optimale Bedingungen zu bieten.
-                  </p>
+                <div class="text-body-1" v-html="aboutPageDate.entry.aboutInhalt[1].text">
                 </div>
               </div>
               
-              <div class="history-image">
+              <div class="history-image" v-if="aboutPageDate.entry.aboutInhalt[1].bild">
                 <VImg
-                  src="https://images.pexels.com/photos/2604792/pexels-photo-2604792.jpeg"
+                  :src="aboutPageDate.entry.aboutInhalt[1].bild[0].url"
                   height="300"
                   cover
                   class="rounded-lg"
@@ -52,8 +37,8 @@
               class="mt-12 mb-8"
             >
               <VTimelineItem
-                v-for="(milestone, index) in milestones"
-                :key="milestone.year"
+                v-for="(milestone, index) in aboutPageDate.entry.meilensteine"
+                :key="milestone.jahr"
                 :dot-color="index % 2 === 0 ? 'primary' : 'accent'"
                 :size="index % 2 === 0 ? 'default' : 'x-small'"
                 fill-dot
@@ -72,11 +57,11 @@
                         index % 2 === 0 ? '' : 'me-4'
                       ]"
                     >
-                      {{ milestone.year }} - {{ milestone.title }}
+                      {{ milestone.jahr }} - {{ milestone.title }}
                     </h2>
                   </VCardTitle>
                   <VCardText class="pa-4">
-                    <p class="text-body-1 mb-0">{{ milestone.description }}</p>
+                    <p class="text-body-1 mb-0" v-html="milestone.beschreibung"></p>
                   </VCardText>
                 </VCard>
               </VTimelineItem>
@@ -88,14 +73,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
 
-const milestones = ref([]);
+const { data: aboutPageDate, error, pending, refresh } = await useAsyncGql({
+  operation: 'GetAboutPageData',
+})
 
-onMounted(async () => {
-  const milestonesData = await queryCollection('milestones').all();
-  milestones.value = milestonesData;
-});
+if (error.value) {
+  // eslint-disable-next-line no-console
+  console.error(error.value)
+}
 </script>
 
 <style scoped>

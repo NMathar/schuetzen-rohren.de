@@ -3,7 +3,7 @@
     <div>
       <!-- Hero Section with full-width image -->
       <HeroSection
-        title="Schützenverein Tradition !!!"
+        title="Schützenverein Tradition"
         subtitle="Ein Ort der Ruhe, Tradition und Gemeinschaft seit 1832"
         background-image="https://images.pexels.com/photos/167698/pexels-photo-167698.jpeg"
         height="100vh"
