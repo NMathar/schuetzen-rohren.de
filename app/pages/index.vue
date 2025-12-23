@@ -3,9 +3,9 @@
     <div>
       <!-- Hero Section with full-width image -->
       <HeroSection
-        title="Schützenverein Tradition"
-        subtitle="Ein Ort der Ruhe, Tradition und Gemeinschaft seit 1832"
-        background-image="https://images.pexels.com/photos/167698/pexels-photo-167698.jpeg"
+        :title="startPageData.entry.title"
+        :subtitle="startPageData.entry.untertitel"
+        :background-image=" startPageData.entry.bild.length ? startPageData.entry.bild[0].url : 'https://images.pexels.com/photos/167698/pexels-photo-167698.jpeg'"
         height="100vh"
         :show-button="false"
       />
@@ -47,12 +47,16 @@
 </template>
 
 <script setup>
-const { data: events, error, pending, refresh } = await useAsyncGql({
+const { data: events, error: getEventsError } = await useAsyncGql({
   operation: 'GetEvents',
   variables: { limit: 15 }
 })
 
-if (error.value) {
+const { data: startPageData, error: getStartPageDataError } = await useAsyncGql({
+  operation: 'GetStartPageData'
+})
+
+if (getEventsError.value || getStartPageDataError.value) {
   // eslint-disable-next-line no-console
   console.error(error.value)
 }

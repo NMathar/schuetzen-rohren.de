@@ -1,0 +1,11 @@
+query GetStartPageData {
+  entry(section: "startseite") {
+    title
+		... on hero_Entry{
+      untertitel
+      bild{
+        url
+      }
+    }
+  }
+}
