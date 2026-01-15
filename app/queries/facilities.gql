@@ -1,0 +1,31 @@
+query GetFacilitiesPageData {
+  entry(section: "facilities") {
+		slug
+		title
+    ... on raeumlichkeitenSeite_Entry{
+      raeumlichkeitenInhalt{
+      ... on hero_Entry {
+          title
+          untertitel
+          bild {
+            url
+          }
+        }
+        ... on content_Entry {
+          title
+          untertitel
+          text
+          bild {
+            url
+          }
+        }
+        ... on galerie_Entry {
+          bilder{
+            title
+            url
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,25 +2,30 @@
   <NuxtLayout>
     <div>
       <HeroSection
-        title="Unsere Räumlichkeiten"
-        subtitle="Entdecken Sie unsere historischen und modernen Räumlichkeiten, die für verschiedene Anlässe zur Verfügung stehen."
-        background-image="https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg"
+        :title="facilitiesPageDate.entry.raeumlichkeitenInhalt[0].title"
+        :subtitle="facilitiesPageDate.entry.raeumlichkeitenInhalt[0].untertitel ? facilitiesPageDate.entry.raeumlichkeitenInhalt[0].untertitel : ''"
+        :background-image="facilitiesPageDate.entry.raeumlichkeitenInhalt[0].bild[0].url"
         height="400"
+        :show-button="false"
       />
       
       <VContainer class="py-12">
         <VRow justify="center">
           <VCol cols="12" md="10">
             <div class="text-center mb-12">
-              <h2 class="text-h3 font-weight-bold mb-4">Unsere Räumlichkeiten</h2>
-              <p class="text-body-1 max-width-700 mx-auto">
-                Der Schützenverein verfügt über verschiedene Räumlichkeiten, die sowohl für Vereinsaktivitäten 
-                als auch für private Veranstaltungen genutzt werden können. Jede unserer Räumlichkeiten bietet 
-                eine einzigartige Atmosphäre und ist mit moderner Ausstattung versehen.
-              </p>
+              <SectionTitle
+                :title="facilitiesPageDate.entry.raeumlichkeitenInhalt[1].title"
+                :subtitle="facilitiesPageDate.entry.raeumlichkeitenInhalt[1].untertitel ? facilitiesPageDate.entry.raeumlichkeitenInhalt[1].untertitel : ''"
+              />
             </div>
-            
+
             <VRow>
+              <Galerie 
+                :images="facilitiesPageDate.entry.raeumlichkeitenInhalt[2].bilder.map(image => image.url)"
+              ></Galerie>
+            </VRow>  
+            
+            <!-- <VRow>
               <VCol 
                 v-for="facility in facilities" 
                 :key="facility.id" 
@@ -34,13 +39,13 @@
                   @book-facility="bookFacility"
                 />
               </VCol>
-            </VRow>
+            </VRow> -->
           </VCol>
         </VRow>
       </VContainer>
       
       <!-- Gallery Dialog -->
-      <VDialog
+      <!-- <VDialog
         v-model="galleryDialog"
         width="800"
         scrollable
@@ -58,10 +63,10 @@
             <ImageGallery v-if="selectedFacility" :images="selectedFacility.gallery" />
           </VCardText>
         </VCard>
-      </VDialog>
+      </VDialog> -->
       
       <!-- Booking Dialog -->
-      <VDialog
+      <!-- <VDialog
         v-model="bookingDialog"
         width="900"
         scrollable
@@ -88,48 +93,25 @@
             />
           </VCardText>
         </VCard>
-      </VDialog>
+      </VDialog> -->
     </div>
   </NuxtLayout>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-
 const galleryDialog = ref(false);
 const bookingDialog = ref(false);
 const selectedFacilityId = ref(null);
-const facilities = ref([]);
 
-const selectedFacility = computed(() => {
-  if (!selectedFacilityId.value) return null;
-  return facilities.value.find(f => f.id === selectedFacilityId.value);
-});
 
-onMounted(async () => {
-  facilities.value = {
-      "id": 1,
-      "title": "Schützenhalle",
-      "description": "Unsere historische Schützenhalle bietet mit ihrer beeindruckenden Holzbalkendecke und großzügigen Fenstern eine einzigartige Atmosphäre für Veranstaltungen jeder Art.",
-      "image": "https://images.pexels.com/photos/587741/pexels-photo-587741.jpeg",
-      "features": [
-        "Bühne mit professioneller Beleuchtung",
-        "Vollausgestattete Küche",
-        "Bartresen mit Zapfanlage",
-        "Flexible Bestuhlung",
-        "Historische Dekorationselemente"
-      ],
-      "capacity": "200",
-      "size": "400 m²",
-      "gallery": [
-        { "src": "https://images.pexels.com/photos/587741/pexels-photo-587741.jpeg", "title": "Schützenhalle Panorama" },
-        { "src": "https://images.pexels.com/photos/267301/pexels-photo-267301.jpeg", "title": "Festbestuhlung" },
-        { "src": "https://images.pexels.com/photos/3050651/pexels-photo-3050651.jpeg", "title": "Bühnenbereich" },
-        { "src": "https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg", "title": "Bar" },
-        { "src": "https://images.pexels.com/photos/1833349/pexels-photo-1833349.jpeg", "title": "Küche" }
-      ]
-    };
-});
+const { data: facilitiesPageDate, error, pending, refresh } = await useAsyncGql({
+  operation: 'GetFacilitiesPageData',
+})
+
+if (error.value) {
+  // eslint-disable-next-line no-console
+  console.error(error.value)
+}
 
 const showGallery = (facilityId) => {
   selectedFacilityId.value = facilityId;
