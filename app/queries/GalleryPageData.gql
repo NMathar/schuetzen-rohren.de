@@ -1,0 +1,17 @@
+query GetGalleryPageData {
+  entry(section: "galerie") {
+    slug
+    title
+    ... on galerieseite_Entry {
+      galerieInhalt {
+        ... on hero_Entry {
+          title
+          untertitel
+          bild {
+            url
+          }
+        }
+      }
+    }
+  }
+}

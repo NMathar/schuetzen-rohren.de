@@ -1,0 +1,23 @@
+query GetGalleryImages($limit: Int!, $search: String, $offset: Int!, $tag: [String]) {
+  entries(
+    section: "galerieEintraege"
+    limit: $limit
+    search: $search
+    orderBy: "postDate DESC"
+    offset: $offset
+    relatedToTags: { slug: $tag }
+  ) {
+    ... on galerieBibEintrag_Entry {
+      id
+      title
+      bild {
+        url
+        height
+      }
+      schlagworte {
+        title
+      }
+    }
+  }
+  entryCount(section: "galerieEintraege", search: $search)
+}

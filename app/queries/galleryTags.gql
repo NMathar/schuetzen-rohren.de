@@ -1,0 +1,6 @@
+query GetGalleryTags{
+  tags(group: "bilder") {
+    title
+    slug
+  }
+}
