@@ -158,32 +158,6 @@
                 </VRow>
               </VWindowItem>
             </VWindow>
-            
-            <VDivider class="my-12" />
-            
-            <SectionTitle
-              title="Vergangene Highlights"
-              subtitle="Impressionen von unseren letzten Veranstaltungen"
-            />
-            
-            <VRow>
-              <VCol v-for="highlight in pastHighlights" :key="highlight.title" cols="12" md="6" class="mb-4">
-                <VCard class="highlight-card">
-                  <VImg :src="highlight.image" height="250" cover />
-                  <VCardTitle class="text-h6">{{ highlight.title }}</VCardTitle>
-                  <VCardSubtitle>{{ highlight.date }}</VCardSubtitle>
-                  <VCardText>
-                    <p>{{ highlight.description }}</p>
-                  </VCardText>
-                  <VCardActions>
-                    <VSpacer />
-                    <VBtn color="primary" variant="text">
-                      Galerie ansehen
-                    </VBtn>
-                  </VCardActions>
-                </VCard>
-              </VCol>
-            </VRow>
           </VCol>
         </VRow>
       </VContainer>
@@ -209,13 +183,11 @@ const eventCategories = [
 
 const upcomingEvents = ref([]);
 const annualEvents = ref([]);
-const pastHighlights = ref([]);
 
 onMounted(async () => {
   const eventsData = await queryContent('data/events').findOne();
   upcomingEvents.value = eventsData.upcomingEvents;
   annualEvents.value = eventsData.annualEvents;
-  pastHighlights.value = eventsData.pastHighlights;
 });
 
 // Filter events based on search and selected categories
@@ -288,15 +260,6 @@ const getCategoryLabel = (categoryValue) => {
 }
 
 .event-card:hover {
-  box-shadow: 0 8px 20px rgba(74, 103, 65, 0.12) !important;
-  background: linear-gradient(135deg, #fff 0%, #F5F5F0 100%) !important;
-}
-
-.highlight-card {
-  transition: all 0.3s ease;
-}
-
-.highlight-card:hover {
   box-shadow: 0 8px 20px rgba(74, 103, 65, 0.12) !important;
   background: linear-gradient(135deg, #fff 0%, #F5F5F0 100%) !important;
 }
