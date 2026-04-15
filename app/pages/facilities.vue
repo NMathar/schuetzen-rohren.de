@@ -20,11 +20,24 @@
             </div>
 
             <VRow>
-              <Galerie 
+              <Galerie
                 :images="facilitiesPageDate.entry.raeumlichkeitenInhalt[2].bilder.map(image => image.url)"
               ></Galerie>
-            </VRow>  
-            
+            </VRow>
+
+            <div id="buchung" class="mt-16">
+              <div class="text-center mb-10">
+                <SectionTitle
+                  title="Räumlichkeit buchen"
+                  subtitle="Füllen Sie das Formular aus und wir melden uns bei Ihnen"
+                />
+              </div>
+              <BookingForm
+                facility-id="allgemein"
+                facility-name="Vereinsräumlichkeiten"
+              />
+            </div>
+
             <!-- <VRow>
               <VCol 
                 v-for="facility in facilities" 

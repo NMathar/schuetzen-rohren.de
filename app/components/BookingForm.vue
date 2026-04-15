@@ -202,33 +202,27 @@ const formData = reactive({
 
 const submitForm = async () => {
   const { valid } = await form.value.validate();
-  
+
   if (valid) {
     loading.value = true;
-    
-    try {
-      // Simulate API request
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      snackbar.text = 'Ihre Buchungsanfrage wurde erfolgreich gesendet!';
-      snackbar.color = 'success';
-      snackbar.show = true;
-      
-      emit('bookingSubmitted', {
-        ...formData,
-        facilityId: props.facilityId
-      });
-      
-      resetForm();
-    } catch (error) {
-      console.error('Booking error:', error);
-      
-      snackbar.text = 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.';
-      snackbar.color = 'error';
-      snackbar.show = true;
-    } finally {
-      loading.value = false;
-    }
+
+    console.log('Buchungsanfrage:', {
+      ...formData,
+      facilityId: props.facilityId,
+      facilityName: props.facilityName
+    });
+
+    snackbar.text = 'Ihre Buchungsanfrage wurde erfolgreich gesendet!';
+    snackbar.color = 'success';
+    snackbar.show = true;
+
+    emit('bookingSubmitted', {
+      ...formData,
+      facilityId: props.facilityId
+    });
+
+    resetForm();
+    loading.value = false;
   }
 };
 

@@ -12,7 +12,32 @@
       
       <!-- Section Divider -->
       <div class="section-divider"></div>
-      
+
+      <!-- Booking CTA Section -->
+      <section class="py-16 booking-cta">
+        <VContainer>
+          <VRow justify="center" align="center">
+            <VCol cols="12" md="7" class="text-center">
+              <h2 class="text-h4 font-weight-light mb-4">Räumlichkeiten mieten</h2>
+              <p class="text-body-1 mb-8" style="opacity: 0.85;">
+                Unser Vereinsheim steht für private Feiern, Seminare und Veranstaltungen zur Verfügung. Jetzt unkompliziert anfragen.
+              </p>
+              <VBtn
+                color="primary"
+                size="large"
+                to="/facilities#buchung"
+                prepend-icon="mdi-calendar-plus"
+              >
+                Jetzt buchen
+              </VBtn>
+            </VCol>
+          </VRow>
+        </VContainer>
+      </section>
+
+      <!-- Section Divider -->
+      <div class="section-divider"></div>
+
       <!-- Events Section -->
       <section class="bg-background py-16 section-leaves">
         <VContainer>
@@ -69,6 +94,10 @@ if (getEventsError.value || getStartPageDataError.value) {
 </script>
 
 <style scoped>
+.booking-cta {
+  background-color: var(--v-surface-variant, #f5f5f0);
+}
+
 .testimonial-card {
   background: linear-gradient(135deg, #fff 0%, #F8F8F0 100%);
   border-radius: 2rem;
