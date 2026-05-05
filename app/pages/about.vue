@@ -40,14 +40,13 @@
                 size="small"
               >
                 <template #opposite>
-                  <div class="pt-1 headline font-weight-bold" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'" v-text="milestone.jahr">
-                    
+                  <div class="headline font-weight-bold" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'" v-text="milestone.jahr">
                   </div>
                 </template>
                 <div>
-                  <div class="mt-n1 headline font-weight-light mb-4" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
+                  <div class="headline font-weight-light mb-4" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
                     {{ milestone.title }}
-                  </h2>
+                  </div>
                   <div v-html="milestone.beschreibung"></div>
                 </div>
               </VTimelineItem>
