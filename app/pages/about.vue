@@ -32,31 +32,23 @@
               </div>
             </div>
             
-            <VTimeline 
-              density="default" 
-              class="mt-12 mb-8"
+            <VTimeline
+              density="compact"
+              align="start"
+              side="end"
+              class="mt-12 mb-8 timeline-responsive"
             >
               <VTimelineItem
                 v-for="(milestone, index) in aboutPageDate.entry.meilensteine"
                 :key="milestone.jahr"
                 :dot-color="index % 2 === 0 ? 'primary' : 'accent'"
-                :size="index % 2 === 0 ? 'default' : 'x-small'"
+                size="small"
                 fill-dot
                 class="mb-4"
               >
-                <VCard elevation="2">
-                  <VCardTitle 
-                    :class="[
-                      index % 2 === 0 ? 'bg-primary' : 'bg-accent',
-                      index % 2 === 0 ? '' : 'justify-end'
-                    ]"
-                  >
-                    <h2 
-                      :class="[
-                        'font-weight-light text-white',
-                        index % 2 === 0 ? '' : 'me-4'
-                      ]"
-                    >
+                <VCard elevation="2" class="timeline-card">
+                  <VCardTitle :class="index % 2 === 0 ? 'bg-primary' : 'bg-accent'">
+                    <h2 class="font-weight-light text-white text-h6">
                       {{ milestone.jahr }} - {{ milestone.title }}
                     </h2>
                   </VCardTitle>
@@ -116,12 +108,16 @@ if (error.value) {
   display: flex;
 }
 
-.timeline-content {
-  transition: all 0.3s ease;
-  max-width: 500px;
+.timeline-responsive {
+  overflow-x: hidden;
 }
 
-.timeline-content:hover {
+.timeline-card {
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.timeline-card:hover {
   box-shadow: 0 8px 20px rgba(74, 103, 65, 0.15) !important;
   transform: translateY(-2px);
 }
