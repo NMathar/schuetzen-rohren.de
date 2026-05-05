@@ -46,7 +46,7 @@
         </VCol>
 
         <VCol cols="12" md="4">
-          <h4 class="text-h6 font-weight-bold text-accent mb-4">
+          <!-- <h4 class="text-h6 font-weight-bold text-accent mb-4">
             Öffnungszeiten
           </h4>
           <div class="d-flex justify-space-between mb-2">
@@ -60,7 +60,7 @@
           <div class="d-flex justify-space-between mb-2">
             <p class="white--text text-body-2 mb-0">Sonntag:</p>
             <p class="white--text text-body-2 mb-0">10:00 - 18:00 Uhr</p>
-          </div>
+          </div> -->
           <div class="d-flex mt-4">
             <VBtn icon variant="text" class="mr-2" color="white">
               <VIcon>mdi-facebook</VIcon>
