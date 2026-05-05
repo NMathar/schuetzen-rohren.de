@@ -85,53 +85,5 @@ if (error.value) {
 </script>
 
 <style scoped>
-.content-wrapper {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
 
-.history-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: center;
-}
-
-@media (max-width: 768px) {
-  .history-section {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-}
-
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.value-item {
-  display: flex;
-}
-
-.timeline-content {
-  transition: all 0.3s ease;
-  max-width: 500px;
-}
-
-.timeline-content:hover {
-  box-shadow: 0 8px 20px rgba(74, 103, 65, 0.15) !important;
-  transform: translateY(-2px);
-}
-
-.value-card {
-  transition: all 0.3s ease;
-}
-
-.value-card:hover {
-  box-shadow: 0 8px 20px rgba(74, 103, 65, 0.15) !important;
-  background: linear-gradient(135deg, #fff 0%, #F5F5F0 100%) !important;
-}
 </style>
