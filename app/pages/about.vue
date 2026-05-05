@@ -44,7 +44,7 @@
                   </div>
                 </template>
                 <div>
-                  <div class="text-title-small font-weight-light mb-1" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
+                  <div class="text-title-medium font-weight-light mb-1" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
                     {{ milestone.title }}
                   </div>
                   <div v-html="milestone.beschreibung"></div>
