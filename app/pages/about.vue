@@ -40,12 +40,12 @@
                 size="small"
               >
                 <template #opposite>
-                  <div class="pt-1 text-h6 font-weight-bold" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
+                  <div class="pt-1 headline font-weight-bold" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
                     {{ milestone.jahr }}
                   </div>
                 </template>
                 <div>
-                  <h2 class="mt-n1 text-h6 font-weight-light mb-4" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
+                  <h2 class="mt-n1 headline font-weight-light mb-4" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
                     {{ milestone.title }}
                   </h2>
                   <div v-html="milestone.beschreibung"></div>
