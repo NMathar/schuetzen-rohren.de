@@ -38,13 +38,12 @@
                 :key="milestone.jahr"
                 :dot-color="index % 2 === 0 ? 'primary' : 'accent'"
                 size="small"
-                class="mb-4"
               >
                 <template #opposite>
                   <div class="headline font-weight-bold" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'" v-text="milestone.jahr">
                   </div>
                 </template>
-                <div>
+                <div class="mb-8">
                   <div class="text-h5 font-weight-light mb-1" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
                     {{ milestone.title }}
                   </div>
