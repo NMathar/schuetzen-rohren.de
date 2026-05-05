@@ -7,7 +7,7 @@
       app
       height="80"
     >
-      <div class="container d-flex align-center py-2">
+      <div class="container d-flex align-center py-2 w-100">
         <div class="d-flex align-center">
           <NuxtLink to="/" class="text-decoration-none">
             <div class="d-flex align-center">
