@@ -43,7 +43,7 @@
                   <div class="headline font-weight-bold" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'" v-text="milestone.jahr">
                   </div>
                 </template>
-                <div class="mb-8">
+                <div class="mb-6">
                   <div class="text-h5 font-weight-light mb-1" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
                     {{ milestone.title }}
                   </div>
