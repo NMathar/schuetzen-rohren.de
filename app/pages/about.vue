@@ -40,8 +40,8 @@
                 size="small"
               >
                 <template #opposite>
-                  <div class="pt-1 headline font-weight-bold" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'">
-                    {{ milestone.jahr }}
+                  <div class="pt-1 headline font-weight-bold" :class="index % 2 === 0 ? 'text-primary' : 'text-accent'" v-text="milestone.jahr">
+                    
                   </div>
                 </template>
                 <div>
