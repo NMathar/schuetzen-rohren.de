@@ -3,13 +3,71 @@
     <div>
       <!-- Hero Section with full-width image -->
       <HeroSection
-        :title="startPageData.entry.title"
-        :subtitle="startPageData.entry.untertitel"
-        :background-image=" startPageData.entry.bild.length ? startPageData.entry.bild[0].url : 'https://images.pexels.com/photos/167698/pexels-photo-167698.jpeg'"
+        :title="startPageData.entry.startseitenInhalt[0].title"
+        :subtitle="
+          startPageData.entry.startseitenInhalt[0].untertitel
+            ? startPageData.entry.startseitenInhalt[0].untertitel
+            : ''
+        "
+        :background-image="
+          startPageData.entry.startseitenInhalt[0].bild.length
+            ? startPageData.entry.startseitenInhalt[0].bild[0].url
+            : 'https://images.pexels.com/photos/167698/pexels-photo-167698.jpeg'
+        "
         height="100vh"
         :show-button="false"
       />
-      
+
+      <!-- Section Divider -->
+      <div class="section-divider"></div>
+
+      <!-- About Section left text right image -->
+      <section class="py-16">
+        <VContainer>
+          <VRow>
+            <VCol cols="12" md="6" class="text-center">
+              <h2 class="text-h4 font-weight-light mb-4">
+                {{ startPageData.entry.startseitenInhalt[1].title }}
+              </h2>
+              <div
+                class="text-body-1"
+                v-html="startPageData.entry.startseitenInhalt[1].text"
+              ></div>
+            </VCol>
+            <VCol cols="12" md="6">
+              <VImg
+                v-if="startPageData.entry.startseitenInhalt[1].bild"
+                :src="
+                  startPageData.entry.startseitenInhalt[1].bild.length
+                    ? startPageData.entry.startseitenInhalt[1].bild[0].url
+                    : ''
+                "
+                height="300"
+                cover
+                class="mt-9"
+              />
+            </VCol>
+          </VRow>
+        </VContainer>
+      </section>
+
+
+      <!-- <section class="py-16">
+        <VContainer>
+          <VRow justify="center" align="center">
+            <VCol cols="12" md="7" class="text-center">
+              <h2 class="text-h4 font-weight-light mb-4">
+                {{ startPageData.entry.startseitenInhalt[1].title }}
+              </h2>
+              <div
+                class="text-body-1"
+                v-html="startPageData.entry.startseitenInhalt[1].text"
+              ></div>
+            </VCol>
+          </VRow>
+        </VContainer>
+      </section> -->
+
       <!-- Section Divider -->
       <div class="section-divider"></div>
 
@@ -18,9 +76,12 @@
         <VContainer>
           <VRow justify="center" align="center">
             <VCol cols="12" md="7" class="text-center">
-              <h2 class="text-h4 font-weight-light mb-4">Räumlichkeiten mieten</h2>
-              <p class="text-body-1 mb-8" style="opacity: 0.85;">
-                Unser Vereinsheim steht für private Feiern, Seminare und Veranstaltungen zur Verfügung. Jetzt unkompliziert anfragen.
+              <h2 class="text-h4 font-weight-light mb-4">
+                Räumlichkeiten mieten
+              </h2>
+              <p class="text-body-1 mb-8" style="opacity: 0.85">
+                Unser Vereinsheim steht für private Feiern, Seminare und
+                Veranstaltungen zur Verfügung. Jetzt unkompliziert anfragen.
               </p>
               <VBtn
                 color="primary"
@@ -41,12 +102,22 @@
       <!-- Events Section -->
       <section class="bg-background py-16 section-leaves">
         <VContainer>
-          <h2 class="text-h3 text-center font-weight-light mb-16">Unsere Veranstaltungen</h2>
+          <h2 class="text-h3 text-center font-weight-light mb-16">
+            Unsere Veranstaltungen
+          </h2>
           <VRow>
-            <VCol v-for="(event, index) in events.entries" :key="index" cols="12" md="4">
+            <VCol
+              v-for="(event, index) in events.entries"
+              :key="index"
+              cols="12"
+              md="4"
+            >
               <VCard class="card-hover h-100" elevation="0">
                 <VImg
-                  :src="event.image || 'https://images.pexels.com/photos/1125268/pexels-photo-1125268.jpeg'"
+                  :src="
+                    event.image ||
+                    'https://images.pexels.com/photos/1125268/pexels-photo-1125268.jpeg'
+                  "
                   height="250"
                   cover
                 />
@@ -54,11 +125,7 @@
                 <VCardText>
                   <p class="mb-2">{{ event.datum }}</p>
                   <div class="mb-6" v-html="event.kurzbeschreibung"></div>
-                  <VBtn
-                    color="accent"
-                    variant="outlined"
-                    :to="'/events'"
-                  >
+                  <VBtn color="accent" variant="outlined" :to="'/events'">
                     Details
                   </VBtn>
                 </VCardText>
@@ -73,17 +140,19 @@
 
 <script setup>
 const { data: events, error: getEventsError } = await useAsyncGql({
-  operation: 'GetEvents',
-  variables: { limit: 15 }
-})
+  operation: "GetEvents",
+  variables: { limit: 15 },
+});
 
-const { data: startPageData, error: getStartPageDataError } = await useAsyncGql({
-  operation: 'GetStartPageData'
-})
+const { data: startPageData, error: getStartPageDataError } = await useAsyncGql(
+  {
+    operation: "GetStartPageData",
+  },
+);
 
 if (getEventsError.value || getStartPageDataError.value) {
   // eslint-disable-next-line no-console
-  console.error(error.value)
+  console.error(error.value);
 }
 
 // const events = ref([])
@@ -99,8 +168,8 @@ if (getEventsError.value || getStartPageDataError.value) {
 }
 
 .testimonial-card {
-  background: linear-gradient(135deg, #fff 0%, #F8F8F0 100%);
-  border-radius: 2rem;
+  background: linear-gradient(135deg, #fff 0%, #f8f8f0 100%);
+  /* border-radius: 2rem; */
   min-height: 400px;
 }
 

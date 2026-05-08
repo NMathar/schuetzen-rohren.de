@@ -246,7 +246,7 @@ p, li {
 
 .card-hover {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 2rem !important;
+  // border-radius: 2rem !important;
   background: linear-gradient(135deg, #fff 0%, #F8F8F0 100%) !important;
   overflow: hidden;
   
@@ -260,7 +260,7 @@ p, li {
     background-image: $forest-texture;
     opacity: 0.04;
     mix-blend-mode: multiply;
-    border-radius: 2rem;
+    // border-radius: 2rem;
     pointer-events: none;
   }
   
@@ -286,7 +286,7 @@ p, li {
 // Form styling
 .form-container {
   background: linear-gradient(135deg, #fff 0%, #F8F8F0 100%);
-  border-radius: 2rem;
+  // border-radius: 2rem;
   box-shadow: 0 8px 30px rgba(74, 103, 65, 0.1);
   padding: $spacing-unit * 4;
   position: relative;
@@ -308,7 +308,6 @@ p, li {
 
 // Custom component styling
 .v-card {
-  border-radius: 2rem !important;
   overflow: hidden;
 }
 

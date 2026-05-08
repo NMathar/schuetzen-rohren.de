@@ -135,7 +135,7 @@
           type="button"
           variant="tonal"
           color="error"
-          class="mr-4"
+          class="mr-4 d-none d-sm-flex d-lg-none"
           @click="resetForm"
         >
           Zurücksetzen
