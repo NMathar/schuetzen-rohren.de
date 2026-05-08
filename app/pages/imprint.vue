@@ -26,33 +26,29 @@
                   <div class="mb-6">
                     <h3 class="text-h6 font-weight-bold mb-2">Vereinsname:</h3>
                     <p class="text-body-1 mb-0">
-                      Schützenverein Tradition e.V.<br>
-                      Gegründet 1832
+                      St. Cornelius Rohren e.V.<br>
+                      Gegründet 1958
                     </p>
                   </div>
                   
                   <div class="mb-6">
                     <h3 class="text-h6 font-weight-bold mb-2">Anschrift:</h3>
                     <p class="text-body-1 mb-0">
-                      Schützenstraße 123<br>
-                      12345 Musterstadt<br>
+                      Im Johannesfeld<br>
+                      52156 Monschau<br>
                       Deutschland
                     </p>
                   </div>
                   
                   <div class="mb-6">
                     <h3 class="text-h6 font-weight-bold mb-2">Kontakt:</h3>
-                    <p class="text-body-1 mb-2">
+                    <!-- <p class="text-body-1 mb-2">
                       <VIcon icon="mdi-phone" size="small" class="mr-2" />
                       Telefon: +49 (0) 123 456789
-                    </p>
-                    <p class="text-body-1 mb-2">
-                      <VIcon icon="mdi-fax" size="small" class="mr-2" />
-                      Fax: +49 (0) 123 456790
-                    </p>
+                    </p> -->
                     <p class="text-body-1 mb-0">
                       <VIcon icon="mdi-email" size="small" class="mr-2" />
-                      E-Mail: info@schuetzenverein-tradition.de
+                      E-Mail: info@schuetzen-rohren.de
                     </p>
                   </div>
                 </div>

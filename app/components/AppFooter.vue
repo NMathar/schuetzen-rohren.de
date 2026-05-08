@@ -5,23 +5,22 @@
         <VCol cols="12" md="4">
           <div class="d-flex align-center mb-4">
             <img
-              src="~assets//images/logo.png"
+              src="~assets/images/logo.png"
               alt="Schützenverein Logo"
               height="60"
               class="mr-3"
             />
             <div>
               <h3 class="text-h5 font-weight-bold text-accent mb-0">
-                Schützenverein
+                St. Cornelius Rohren e.V.
               </h3>
               <div class="text-caption text-uppercase white--text">
-                Tradition seit 1832
+                Tradition, Gemeinschaft und ein Schuss Treffsicherheit
               </div>
             </div>
           </div>
           <p class="white--text text-body-2 mb-0">
-            Der Schützenverein steht für Tradition, Präzision und Gemeinschaft.
-            Wir pflegen altes Handwerk und sportliche Exzellenz.
+            Gemeinschaft erleben: Ob beim wöchentlichen Training, dem traditionellen Hubertusessen oder unserer legendären Großkirmes zu Ehren des Schutzpatrons Cornelius  – bei uns steht das Miteinander an erster Stelle.
           </p>
         </VCol>
 
@@ -30,17 +29,13 @@
           <div class="d-flex align-center mb-3">
             <VIcon color="white" class="mr-2">mdi-map-marker</VIcon>
             <p class="white--text text-body-2 mb-0">
-              Schützenstraße 123, 12345 Musterstadt
+              Im Johannesfeld, 52156 Monschau
             </p>
-          </div>
-          <div class="d-flex align-center mb-3">
-            <VIcon color="white" class="mr-2">mdi-phone</VIcon>
-            <p class="white--text text-body-2 mb-0">+49 (0) 123 456789</p>
           </div>
           <div class="d-flex align-center mb-3">
             <VIcon color="white" class="mr-2">mdi-email</VIcon>
             <p class="white--text text-body-2 mb-0">
-              info@schuetzenverein-tradition.de
+              info@schuetzen-rohren.de
             </p>
           </div>
         </VCol>
@@ -61,7 +56,7 @@
             <p class="white--text text-body-2 mb-0">Sonntag:</p>
             <p class="white--text text-body-2 mb-0">10:00 - 18:00 Uhr</p>
           </div> -->
-          <div class="d-flex mt-4">
+          <!-- <div class="d-flex mt-4">
             <VBtn icon variant="text" class="mr-2" color="white">
               <VIcon>mdi-facebook</VIcon>
             </VBtn>
@@ -71,7 +66,7 @@
             <VBtn icon variant="text" color="white">
               <VIcon>mdi-youtube</VIcon>
             </VBtn>
-          </div>
+          </div> -->
         </VCol>
       </VRow>
 
@@ -83,7 +78,7 @@
         <p
           class="white--text text-body-2 text-center text-md-left mb-3 mb-md-0"
         >
-          © {{ new Date().getFullYear() }} Schützenverein Tradition. Alle Rechte
+          © {{ new Date().getFullYear() }} St. Cornelius Rohren e.V. Alle Rechte
           vorbehalten.
         </p>
         <div class="d-flex">
