@@ -58,6 +58,23 @@
               title="Kontaktformular"
               subtitle="Haben Sie Fragen oder Anregungen? Schreiben Sie uns!"
             />
+
+            <!-- <VAlert
+              v-if="isMailerReachable"
+              color="success"
+              icon="mdi-check-circle"
+              class="mb-6"
+            >
+              <p class="text-subtitle-1">Der Mailerdienst ist erreichbar</p>
+            </VAlert> -->
+            <VAlert
+              v-if="!isMailerReachable"
+              color="error"
+              icon="mdi-alert-circle"
+              class="mb-6"
+            >
+              <p class="text-subtitle-1">Der Mailerdienst ist nicht erreichbar</p>
+            </VAlert>
             
             <VCard class="form-container">
               <VCardText>
@@ -148,6 +165,7 @@
                     <VBtn
                       type="submit"
                       color="primary"
+                      :disabled="!isMailerReachable"
                       :loading="loading"
                     >
                       Senden
@@ -191,6 +209,27 @@ const snackbar = reactive({
   color: 'success'
 });
 
+// create compute to check if mailer is reachable with ping and get pong
+const isMailerReachable = ref(false);
+
+onMounted(async () => {
+  try {
+    const response = await fetch(`${useRuntimeConfig().public.MAILER_HOST}/ping`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': useRuntimeConfig().public.MAILER_API_KEY,
+      }
+    })
+
+    if (response.ok) {
+      isMailerReachable.value = true;
+    }
+  } catch (error) {
+    console.error('Error pinging mailer:', error);
+  }
+})
+
 const categories = [
   'Allgemeine Anfrage',
   'Mitgliedschaft',
@@ -221,12 +260,14 @@ const submitForm = async () => {
         throw new Error('MAILER_HOST is not defined in runtime config');
       }
       
+      // remove privacy from formData
+      delete formData.privacy;
+
       const response = await fetch(`${mailerHost}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-KEY': useRuntimeConfig().public.MAILER_API_KEY,
-          'Access-Control-Allow-Origin': '*'
+          'x-api-key': useRuntimeConfig().public.MAILER_API_KEY,
         },
         body: JSON.stringify(formData)
       });

@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     public: {
       GQL_HOST: 'https://backend.schuetzen-rohren.de/actions/graphql/api',
       MAILER_HOST: 'https://mailer.schuetzen-rohren.de/api/mail',
-      MAILER_API_KEY: '123'
+      MAILER_API_KEY: '51dc7c8fb21d837fe7d764134edcf62f29be49d9cbffd9612076a0580220e7fb'
     }
   },
 

@@ -1,8 +1,26 @@
 <template>
   <div class="booking-form-container">
+    <!-- <VAlert
+              v-if="isMailerReachable"
+              color="success"
+              icon="mdi-check-circle"
+              class="mb-6"
+            >
+              <p class="text-subtitle-1">Der Mailerdienst ist erreichbar</p>
+            </VAlert> -->
+    <VAlert
+      v-if="!isMailerReachable"
+      color="error"
+      icon="mdi-alert-circle"
+      class="mb-6"
+    >
+      <p class="text-subtitle-1">Der Mailerdienst ist nicht erreichbar</p>
+    </VAlert>
     <VForm ref="form" @submit.prevent="submitForm">
-      <p class="text-h6 font-weight-bold mb-4">Reservierung für: {{ facilityName }}</p>
-      
+      <p class="text-h6 font-weight-bold mb-4">
+        Reservierung für: {{ facilityName }}
+      </p>
+
       <VRow>
         <VCol cols="12" md="6">
           <VTextField
@@ -10,10 +28,10 @@
             label="Name *"
             required
             variant="outlined"
-            :rules="[v => !!v || 'Name ist erforderlich']"
+            :rules="[(v) => !!v || 'Name ist erforderlich']"
           />
         </VCol>
-        
+
         <VCol cols="12" md="6">
           <VTextField
             v-model="formData.email"
@@ -22,12 +40,12 @@
             variant="outlined"
             type="email"
             :rules="[
-              v => !!v || 'E-Mail ist erforderlich',
-              v => /.+@.+\..+/.test(v) || 'E-Mail muss gültig sein'
+              (v) => !!v || 'E-Mail ist erforderlich',
+              (v) => /.+@.+\..+/.test(v) || 'E-Mail muss gültig sein',
             ]"
           />
         </VCol>
-        
+
         <VCol cols="12" md="6">
           <VTextField
             v-model="formData.phone"
@@ -35,7 +53,7 @@
             variant="outlined"
           />
         </VCol>
-        
+
         <VCol cols="12" md="6">
           <VSelect
             v-model="formData.eventType"
@@ -43,10 +61,10 @@
             label="Art der Veranstaltung *"
             required
             variant="outlined"
-            :rules="[v => !!v || 'Veranstaltungsart ist erforderlich']"
+            :rules="[(v) => !!v || 'Veranstaltungsart ist erforderlich']"
           />
         </VCol>
-        
+
         <VCol cols="12" md="6">
           <VTextField
             v-model="formData.date"
@@ -54,10 +72,10 @@
             required
             variant="outlined"
             type="date"
-            :rules="[v => !!v || 'Datum ist erforderlich']"
+            :rules="[(v) => !!v || 'Datum ist erforderlich']"
           />
         </VCol>
-        
+
         <VCol cols="12" md="6">
           <VTextField
             v-model="formData.time"
@@ -65,10 +83,10 @@
             required
             variant="outlined"
             type="time"
-            :rules="[v => !!v || 'Uhrzeit ist erforderlich']"
+            :rules="[(v) => !!v || 'Uhrzeit ist erforderlich']"
           />
         </VCol>
-        
+
         <VCol cols="12" md="6">
           <VTextField
             v-model="formData.duration"
@@ -77,10 +95,10 @@
             variant="outlined"
             type="number"
             min="1"
-            :rules="[v => !!v || 'Dauer ist erforderlich']"
+            :rules="[(v) => !!v || 'Dauer ist erforderlich']"
           />
         </VCol>
-        
+
         <VCol cols="12" md="6">
           <VTextField
             v-model="formData.guests"
@@ -89,10 +107,10 @@
             variant="outlined"
             type="number"
             min="1"
-            :rules="[v => !!v || 'Anzahl der Gäste ist erforderlich']"
+            :rules="[(v) => !!v || 'Anzahl der Gäste ist erforderlich']"
           />
         </VCol>
-        
+
         <VCol cols="12">
           <VTextarea
             v-model="formData.notes"
@@ -101,17 +119,17 @@
             rows="3"
           />
         </VCol>
-        
+
         <VCol cols="12">
           <VCheckbox
             v-model="formData.terms"
             label="Ich stimme den Nutzungsbedingungen zu *"
             required
-            :rules="[v => !!v || 'Zustimmung ist erforderlich']"
+            :rules="[(v) => !!v || 'Zustimmung ist erforderlich']"
           />
         </VCol>
       </VRow>
-      
+
       <div class="d-flex justify-end mt-4">
         <VBtn
           type="button"
@@ -122,80 +140,91 @@
         >
           Zurücksetzen
         </VBtn>
-        <VBtn
-          type="submit"
-          color="primary"
-          :loading="loading"
-        >
+        <VBtn :disabled="!isMailerReachable" type="submit" color="primary" :loading="loading">
           Anfrage senden
         </VBtn>
       </div>
     </VForm>
-    
-    <VSnackbar
-      v-model="snackbar.show"
-      :color="snackbar.color"
-      :timeout="5000"
-    >
+
+    <VSnackbar v-model="snackbar.show" :color="snackbar.color" :timeout="5000">
       {{ snackbar.text }}
-      
+
       <template v-slot:actions>
-        <VBtn
-          variant="text"
-          @click="snackbar.show = false"
-        >
-          Schließen
-        </VBtn>
+        <VBtn variant="text" @click="snackbar.show = false"> Schließen </VBtn>
       </template>
     </VSnackbar>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive } from "vue";
 
 const props = defineProps({
   facilityId: {
     type: [String, Number],
-    required: true
+    required: true,
   },
   facilityName: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
-const emit = defineEmits(['bookingSubmitted']);
+const emit = defineEmits(["bookingSubmitted"]);
+
+// create compute to check if mailer is reachable with ping and get pong
+const isMailerReachable = ref(false);
+
+onMounted(async () => {
+  try {
+    const response = await fetch(
+      `${useRuntimeConfig().public.MAILER_HOST}/ping`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": useRuntimeConfig().public.MAILER_API_KEY,
+        },
+      },
+    );
+
+    if (response.ok) {
+      isMailerReachable.value = true;
+    }
+  } catch (error) {
+    console.error("Error pinging mailer:", error);
+  }
+});
 
 const form = ref(null);
 const loading = ref(false);
 const snackbar = reactive({
   show: false,
-  text: '',
-  color: 'success'
+  text: "",
+  color: "success",
 });
 
 const eventTypes = [
-  'Geburtstag',
-  'Jubiläum',
-  'Betriebsfeier',
-  'Hochzeit',
-  'Vereinstreffen',
-  'Seminar',
-  'Sonstiges'
+  "Geburtstag",
+  "Jubiläum",
+  "Betriebsfeier",
+  "Hochzeit",
+  "Vereinstreffen",
+  "Seminar",
+  "Sonstiges",
 ];
 
 const formData = reactive({
-  name: '',
-  email: '',
-  phone: '',
-  eventType: '',
-  date: '',
-  time: '',
-  duration: '',
-  guests: '',
-  notes: '',
-  terms: false
+  name: "",
+  email: "",
+  phone: "",
+  eventType: "",
+  date: "",
+  time: "",
+  duration: "",
+  guests: "",
+  notes: "",
+  terms: false,
 });
 
 const submitForm = async () => {
@@ -206,41 +235,42 @@ const submitForm = async () => {
 
     // get MAILER_HOST from public runtime config
     const mailerHost = useRuntimeConfig().public.MAILER_HOST;
-    if(!mailerHost) {
-      throw new Error('MAILER_HOST is not defined in runtime config');
+    if (!mailerHost) {
+      throw new Error("MAILER_HOST is not defined in runtime config");
     }
 
     const response = await fetch(`${mailerHost}/room-booking`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': useRuntimeConfig().public.MAILER_API_KEY,
-        'Access-Control-Allow-Origin': '*'
+        "Content-Type": "application/json",
+        "X-API-KEY": useRuntimeConfig().public.MAILER_API_KEY,
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
         ...formData,
-        facilityId: props.facilityId
-      })
-    })
+        facilityId: props.facilityId,
+      }),
+    });
 
     if (!response.ok) {
-      console.log('Form submission error:', response);
-      
-      snackbar.text = 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.';
-      snackbar.color = 'error';
+      console.log("Form submission error:", response);
+
+      snackbar.text =
+        "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.";
+      snackbar.color = "error";
       snackbar.show = true;
 
       loading.value = false;
       return;
     }
 
-    snackbar.text = 'Ihre Buchungsanfrage wurde erfolgreich gesendet!';
-    snackbar.color = 'success';
+    snackbar.text = "Ihre Buchungsanfrage wurde erfolgreich gesendet!";
+    snackbar.color = "success";
     snackbar.show = true;
 
-    emit('bookingSubmitted', {
+    emit("bookingSubmitted", {
       ...formData,
-      facilityId: props.facilityId
+      facilityId: props.facilityId,
     });
 
     resetForm();
@@ -250,11 +280,11 @@ const submitForm = async () => {
 
 const resetForm = () => {
   form.value.reset();
-  Object.keys(formData).forEach(key => {
-    if (key === 'terms') {
+  Object.keys(formData).forEach((key) => {
+    if (key === "terms") {
       formData[key] = false;
     } else {
-      formData[key] = '';
+      formData[key] = "";
     }
   });
 };
@@ -264,7 +294,7 @@ const resetForm = () => {
 .booking-form-container {
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 24px;
 }
 </style>
