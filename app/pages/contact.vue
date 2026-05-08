@@ -126,14 +126,6 @@
                     
                     <VCol cols="12">
                       <VCheckbox
-                        v-model="formData.newsletter"
-                        color="primary"
-                        label="Ich möchte den Newsletter erhalten"
-                      />
-                    </VCol>
-                    
-                    <VCol cols="12">
-                      <VCheckbox
                         v-model="formData.privacy"
                         color="primary"
                         label="Ich habe die Datenschutzerklärung gelesen und stimme zu *"
@@ -202,7 +194,6 @@ const snackbar = reactive({
 const categories = [
   'Allgemeine Anfrage',
   'Mitgliedschaft',
-  'Kursanmeldung',
   'Buchungsanfrage',
   'Presse/Medien',
   'Sonstiges'
@@ -214,7 +205,6 @@ const formData = reactive({
   subject: '',
   category: '',
   message: '',
-  newsletter: false,
   privacy: false
 });
 
@@ -225,8 +215,32 @@ const submitForm = async () => {
     loading.value = true;
     
     try {
-      // Simulate API request
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Get MAILER_HOST from public runtime config
+      const mailerHost = useRuntimeConfig().public.MAILER_HOST;
+      if(!mailerHost) {
+        throw new Error('MAILER_HOST is not defined in runtime config');
+      }
+      
+      const response = await fetch(`${mailerHost}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': useRuntimeConfig().public.MAILER_API_KEY,
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      if (!response.ok) {
+        console.log('Form submission error:', response);
+        
+        snackbar.text = 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.';
+        snackbar.color = 'error';
+        snackbar.show = true;
+        
+        return;
+      }
+      
       
       snackbar.text = 'Vielen Dank für Ihre Nachricht! Wir werden uns schnellstmöglich bei Ihnen melden.';
       snackbar.color = 'success';

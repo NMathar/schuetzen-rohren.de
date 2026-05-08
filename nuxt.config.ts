@@ -20,7 +20,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      GQL_HOST: 'https://backend.schuetzen-rohren.de/actions/graphql/api'
+      GQL_HOST: 'https://backend.schuetzen-rohren.de/actions/graphql/api',
+      MAILER_HOST: 'https://mailer.schuetzen-rohren.de/api/mail',
+      MAILER_API_KEY: '123'
     }
   },
 

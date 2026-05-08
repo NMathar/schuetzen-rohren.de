@@ -32,9 +32,7 @@
           <VTextField
             v-model="formData.phone"
             label="Telefon *"
-            required
             variant="outlined"
-            :rules="[v => !!v || 'Telefon ist erforderlich']"
           />
         </VCol>
         
@@ -206,11 +204,35 @@ const submitForm = async () => {
   if (valid) {
     loading.value = true;
 
-    console.log('Buchungsanfrage:', {
-      ...formData,
-      facilityId: props.facilityId,
-      facilityName: props.facilityName
-    });
+    // get MAILER_HOST from public runtime config
+    const mailerHost = useRuntimeConfig().public.MAILER_HOST;
+    if(!mailerHost) {
+      throw new Error('MAILER_HOST is not defined in runtime config');
+    }
+
+    const response = await fetch(`${mailerHost}/room-booking`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': useRuntimeConfig().public.MAILER_API_KEY,
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({
+        ...formData,
+        facilityId: props.facilityId
+      })
+    })
+
+    if (!response.ok) {
+      console.log('Form submission error:', response);
+      
+      snackbar.text = 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.';
+      snackbar.color = 'error';
+      snackbar.show = true;
+
+      loading.value = false;
+      return;
+    }
 
     snackbar.text = 'Ihre Buchungsanfrage wurde erfolgreich gesendet!';
     snackbar.color = 'success';

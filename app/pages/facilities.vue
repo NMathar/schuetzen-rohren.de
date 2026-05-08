@@ -112,10 +112,6 @@
 </template>
 
 <script setup>
-const galleryDialog = ref(false);
-const bookingDialog = ref(false);
-const selectedFacilityId = ref(null);
-
 
 const { data: facilitiesPageDate, error, pending, refresh } = await useAsyncGql({
   operation: 'GetFacilitiesPageData',
@@ -126,28 +122,28 @@ if (error.value) {
   console.error(error.value)
 }
 
-const showGallery = (facilityId) => {
-  selectedFacilityId.value = facilityId;
-  galleryDialog.value = true;
-};
+// const showGallery = (facilityId) => {
+//   selectedFacilityId.value = facilityId;
+//   galleryDialog.value = true;
+// };
 
-const bookFacility = (facilityId) => {
-  selectedFacilityId.value = facilityId;
-  bookingDialog.value = true;
-};
+// const bookFacility = (facilityId) => {
+//   selectedFacilityId.value = facilityId;
+//   bookingDialog.value = true;
+// };
 
-const closeBookingDialog = () => {
-  bookingDialog.value = false;
-  // Reset selected facility after a short delay to allow dialog to close smoothly
-  setTimeout(() => {
-    selectedFacilityId.value = null;
-  }, 300);
-};
+// const closeBookingDialog = () => {
+//   bookingDialog.value = false;
+//   // Reset selected facility after a short delay to allow dialog to close smoothly
+//   setTimeout(() => {
+//     selectedFacilityId.value = null;
+//   }, 300);
+// };
 
-const handleBookingSubmitted = (bookingData) => {
-  console.log('Booking submitted:', bookingData);
-  closeBookingDialog();
-};
+// const handleBookingSubmitted = (bookingData) => {
+//   console.log('Booking submitted:', bookingData);
+//   closeBookingDialog();
+// };
 </script>
 
 <style scoped>
