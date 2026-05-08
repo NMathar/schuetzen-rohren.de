@@ -49,7 +49,7 @@
         <VCol cols="12" md="6">
           <VTextField
             v-model="formData.phone"
-            label="Telefon *"
+            label="Telefon"
             variant="outlined"
           />
         </VCol>
@@ -140,7 +140,12 @@
         >
           Zurücksetzen
         </VBtn>
-        <VBtn :disabled="!isMailerReachable" type="submit" color="primary" :loading="loading">
+        <VBtn
+          :disabled="!isMailerReachable"
+          type="submit"
+          color="primary"
+          :loading="loading"
+        >
           Anfrage senden
         </VBtn>
       </div>
@@ -231,50 +236,69 @@ const submitForm = async () => {
   const { valid } = await form.value.validate();
 
   if (valid) {
-    loading.value = true;
+    try {
+      loading.value = true;
 
-    // get MAILER_HOST from public runtime config
-    const mailerHost = useRuntimeConfig().public.MAILER_HOST;
-    if (!mailerHost) {
-      throw new Error("MAILER_HOST is not defined in runtime config");
-    }
+      // get MAILER_HOST from public runtime config
+      const mailerHost = useRuntimeConfig().public.MAILER_HOST;
+      if (!mailerHost) {
+        throw new Error("MAILER_HOST is not defined in runtime config");
+      }
 
-    const response = await fetch(`${mailerHost}/room-booking`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY": useRuntimeConfig().public.MAILER_API_KEY,
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
+      // remove privacy from formData
+      delete formData.terms;
+      
+
+      // add seconds to time if :00 is missing
+      formData.time = formData.time.endsWith(":00")
+        ? formData.time
+        : formData.time + ":00";
+      
+
+      const response = await fetch(`${mailerHost}/room-booking`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": useRuntimeConfig().public.MAILER_API_KEY
+        },
+        body: JSON.stringify({
+          ...formData
+        }),
+      });
+
+      if (!response.ok) {
+        console.log("Form submission error:", response);
+
+        snackbar.text =
+          "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.";
+        snackbar.color = "error";
+        snackbar.show = true;
+
+        loading.value = false;
+        return;
+      }
+
+      snackbar.text = "Ihre Buchungsanfrage wurde erfolgreich gesendet!";
+      snackbar.color = "success";
+      snackbar.show = true;
+
+      emit("bookingSubmitted", {
         ...formData,
         facilityId: props.facilityId,
-      }),
-    });
+      });
 
-    if (!response.ok) {
-      console.log("Form submission error:", response);
+      resetForm();
+      loading.value = false;
+    } catch (error) {
+      console.error("Error removing privacy from form data:", error);
 
       snackbar.text =
-        "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.";
+        "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.";
       snackbar.color = "error";
       snackbar.show = true;
 
       loading.value = false;
-      return;
     }
-
-    snackbar.text = "Ihre Buchungsanfrage wurde erfolgreich gesendet!";
-    snackbar.color = "success";
-    snackbar.show = true;
-
-    emit("bookingSubmitted", {
-      ...formData,
-      facilityId: props.facilityId,
-    });
-
-    resetForm();
-    loading.value = false;
   }
 };
 
